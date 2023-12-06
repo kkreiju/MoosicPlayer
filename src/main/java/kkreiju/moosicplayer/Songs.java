@@ -15,6 +15,7 @@ public class Songs{
     public long changeTime;
     private boolean isPlaying = false;
     public boolean hasStarted = false;
+    public boolean initialSet = false;
     Clip clip = null;
     private boolean initializedData = false;
     
@@ -64,6 +65,7 @@ public class Songs{
     }
 
     public void Play(String getSongTitle, String getArtistname) {
+        initialSet = true;
         try {
             File musicfile = new File("src\\main\\java\\kkreiju\\moosicplayer\\songs\\" + getSongTitle + ".wav");
             AudioInputStream audiostream = AudioSystem.getAudioInputStream(musicfile);
@@ -120,5 +122,9 @@ public class Songs{
     
     public int getCalculateTime(){
         return calculateTime;
+    }
+    
+    public boolean getInitializedData(){
+        return initializedData;
     }
 }

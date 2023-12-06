@@ -3,6 +3,8 @@ package kkreiju.moosicplayer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.sound.sampled.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,6 +17,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     int i = 0;
     int minute = 0;
     int second = 0;
+    int tempVolume = 0;
     boolean onLoop = false;
 
     //uninitialized music art
@@ -36,6 +39,16 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     Image scaledNextButton = nonextButton.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
     ImageIcon noshuffleButton = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\shuffle.png");
     Image scaledShuffleButton = noshuffleButton.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+    ImageIcon novolumeHigh = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\volumeHigh.png");
+    Image scaledVolumeHigh = novolumeHigh.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+    ImageIcon novolumeMedium = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\volumeMedium.png");
+    Image scaledVolumeMedium = novolumeMedium.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+    ImageIcon novolumeLow = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\volumeLow.png");
+    Image scaledVolumeLow = novolumeLow.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+    ImageIcon novolumeMute = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\volumeMute.png");
+    Image scaledVolumeMute = novolumeMute.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+    ImageIcon noPlaying = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\nowPlaying.gif");
+    Image scalednowPlaying = noPlaying.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
 
     /**
      * Creates new form GUI
@@ -49,6 +62,11 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                 formKeyPressed(evt);
             }
         });
+        volume.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
         songs.InitializeData();
         changeSongListData();
     }
@@ -58,9 +76,9 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
         musicSlider.setMaximum(songs.calculateTime);
         long microsecondValue = songs.clip.getMicrosecondPosition();
-        minute = ((int)microsecondValue / 1_000_000) / 60;
-        second = ((int)microsecondValue / 1_000_000) % 60;
-        
+        minute = ((int) microsecondValue / 1_000_000) / 60;
+        second = ((int) microsecondValue / 1_000_000) % 60;
+
         if (i < songs.calculateTime) {
             musicSlider.setValue(i);
         } else {
@@ -82,11 +100,15 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             i = 0;
             if (onLoop) {
                 playMethod();
+                changeSongListData();
+                nowPlayingTexture();
             } else {
                 if (songs.index < songs.artistName.size() - 1) {
                     songs.index++;
                     changeData();
                     playMethod();
+                    changeSongListData();
+                    nowPlayingTexture();
                 }
             }
         }
@@ -116,6 +138,8 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         musicTitle = new javax.swing.JLabel();
         artistName = new javax.swing.JLabel();
         coverArt = new javax.swing.JLabel();
+        volume = new javax.swing.JSlider();
+        volumeButton = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -351,6 +375,25 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap())
         );
 
+        volume.setBackground(new java.awt.Color(102, 102, 102));
+        volume.setValue(81);
+        volume.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                volumeStateChanged(evt);
+            }
+        });
+
+        volumeButton.setIcon(new javax.swing.ImageIcon(scaledVolumeHigh));
+        volumeButton.setText("");
+        volumeButton.setMaximumSize(new java.awt.Dimension(20, 20));
+        volumeButton.setMinimumSize(new java.awt.Dimension(20, 20));
+        volumeButton.setPreferredSize(new java.awt.Dimension(20, 20));
+        volumeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                volumeButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -360,17 +403,32 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(actionLog, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 232, Short.MAX_VALUE)
+                .addComponent(volumeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(actionLog, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(volume, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(volume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
                 .addComponent(actionLog))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(volumeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel3.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jPanel3MouseWheelMoved(evt);
+            }
+        });
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -403,9 +461,14 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         );
 
         scroller.setBlockIncrement(1);
-        scroller.setMaximum(8);
+        scroller.setMaximum(9);
         scroller.setMinimum(1);
-        scroller.setVisibleAmount(1);
+        scroller.setVisibleAmount(2);
+        scroller.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                scrollerMouseWheelMoved(evt);
+            }
+        });
         scroller.addAdjustmentListener(new java.awt.event.AdjustmentListener() {
             public void adjustmentValueChanged(java.awt.event.AdjustmentEvent evt) {
                 scrollerAdjustmentValueChanged(evt);
@@ -418,6 +481,11 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         songPlay1.setMaximumSize(new java.awt.Dimension(25, 25));
         songPlay1.setMinimumSize(new java.awt.Dimension(25, 25));
         songPlay1.setPreferredSize(new java.awt.Dimension(25, 25));
+        songPlay1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                songPlay1MouseClicked(evt);
+            }
+        });
 
         songPlay2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         songPlay2.setIcon(new javax.swing.ImageIcon(scaledPlayButton));
@@ -425,6 +493,11 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         songPlay2.setMaximumSize(new java.awt.Dimension(25, 25));
         songPlay2.setMinimumSize(new java.awt.Dimension(25, 25));
         songPlay2.setPreferredSize(new java.awt.Dimension(25, 25));
+        songPlay2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                songPlay2MouseClicked(evt);
+            }
+        });
 
         songPlay3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         songPlay3.setIcon(new javax.swing.ImageIcon(scaledPlayButton));
@@ -432,6 +505,16 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         songPlay3.setMaximumSize(new java.awt.Dimension(25, 25));
         songPlay3.setMinimumSize(new java.awt.Dimension(25, 25));
         songPlay3.setPreferredSize(new java.awt.Dimension(25, 25));
+        songPlay3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                songPlay3MouseClicked(evt);
+            }
+        });
+        songPlay3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                songPlay3KeyPressed(evt);
+            }
+        });
 
         songPlay4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         songPlay4.setIcon(new javax.swing.ImageIcon(scaledPlayButton));
@@ -439,6 +522,11 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         songPlay4.setMaximumSize(new java.awt.Dimension(25, 25));
         songPlay4.setMinimumSize(new java.awt.Dimension(25, 25));
         songPlay4.setPreferredSize(new java.awt.Dimension(25, 25));
+        songPlay4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                songPlay4MouseClicked(evt);
+            }
+        });
 
         songPlayTitle1.setText("");
 
@@ -640,10 +728,8 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 724, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -667,7 +753,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_loopButtonMouseClicked
 
     private void shuffleButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_shuffleButtonMouseClicked
-        actionLog.setText("Action Log: Shuffled");
+        shuffleButton();
     }//GEN-LAST:event_shuffleButtonMouseClicked
 
     private void previousButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_previousButtonMouseClicked
@@ -719,7 +805,82 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
     private void scrollerAdjustmentValueChanged(java.awt.event.AdjustmentEvent evt) {//GEN-FIRST:event_scrollerAdjustmentValueChanged
         changeSongListData();
+        nowPlayingTexture();
     }//GEN-LAST:event_scrollerAdjustmentValueChanged
+
+    private void songPlay1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_songPlay1MouseClicked
+        if(songs.index != scroller.getValue() - 1){
+            songs.index = scroller.getValue() - 1;
+            songListPlay();
+            changeSongListData();
+            nowPlayingTexture();
+        }
+        if(songs.clip == null){
+            songs.index = scroller.getValue() - 1;
+            songListPlay();
+            changeSongListData();
+            nowPlayingTexture();
+        }
+    }//GEN-LAST:event_songPlay1MouseClicked
+
+    private void songPlay2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_songPlay2MouseClicked
+        if(songs.index != scroller.getValue()){
+            songs.index = scroller.getValue();
+            songListPlay();
+            changeSongListData();
+            nowPlayingTexture();
+        }
+    }//GEN-LAST:event_songPlay2MouseClicked
+
+    private void songPlay3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_songPlay3KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_songPlay3KeyPressed
+
+    private void songPlay3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_songPlay3MouseClicked
+        if(songs.index != scroller.getValue() + 1){
+            songs.index = scroller.getValue() + 1;
+            songListPlay();
+            changeSongListData();
+            nowPlayingTexture();
+        }
+    }//GEN-LAST:event_songPlay3MouseClicked
+
+    private void songPlay4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_songPlay4MouseClicked
+        if(songs.index != scroller.getValue() + 2){
+            songs.index = scroller.getValue() + 2;
+            songListPlay();
+            changeSongListData();
+            nowPlayingTexture();
+        }
+    }//GEN-LAST:event_songPlay4MouseClicked
+
+    private void volumeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_volumeStateChanged
+        volumeMethod();
+    }//GEN-LAST:event_volumeStateChanged
+
+    private void volumeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_volumeButtonMouseClicked
+        mute();
+    }//GEN-LAST:event_volumeButtonMouseClicked
+
+    private void scrollerMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_scrollerMouseWheelMoved
+        int turn = evt.getWheelRotation();
+        if(turn < 0){
+            scroller.setValue(scroller.getValue() - 1);
+        }
+        else{
+            scroller.setValue(scroller.getValue() + 1);
+        }
+    }//GEN-LAST:event_scrollerMouseWheelMoved
+
+    private void jPanel3MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jPanel3MouseWheelMoved
+        int turn = evt.getWheelRotation();
+        if(turn < 0){
+            scroller.setValue(scroller.getValue() - 1);
+        }
+        else{
+            scroller.setValue(scroller.getValue() + 1);
+        }
+    }//GEN-LAST:event_jPanel3MouseWheelMoved
 
     // I DELETED THE INITCOMPONENTS FUNCTIONS NOW WHAT HAVE I DONE HUHU ANYWAY AYAW HILABTI!
     private void formKeyPressed(java.awt.event.KeyEvent evt) {
@@ -729,15 +890,16 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             endingTime.setText(songs.displayEndTime);
         } else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
             nextButton();
-        }
-        else if(evt.getKeyCode() == KeyEvent.VK_LEFT){
+        } else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
             previousButton();
-        }
-        else if(evt.getKeyCode() == KeyEvent.VK_L){
+        } else if (evt.getKeyCode() == KeyEvent.VK_L) {
             loopButton();
-        }
-        else if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             System.exit(0);
+        } else if (evt.getKeyCode() == KeyEvent.VK_S) {
+            shuffleButton();
+        } else if (evt.getKeyCode() == KeyEvent.VK_M) {
+            mute();
         }
     }
 
@@ -755,7 +917,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
     public void prevOrNext() {
         timer.stop();
-        if(songs.clip != null){
+        if (songs.clip != null) {
             songs.clip.close();
         }
         songs.setIsPlaying(false);
@@ -767,16 +929,19 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         musicSlider.setValue(0);
         startingTime.setText("0:00");
         changeData();
+        changeSongListData();
+        nowPlayingTexture();
         songs.Play(songs.songTitle.get(songs.index), songs.artistName.get(songs.index));
         timer.start();
+        volumeMethod();
         endingTime.setText(songs.displayEndTime);
     }
 
     public void changeData() {
-        if(!songs.getIsPlaying()){
+        if (!songs.getIsPlaying()) {
             songs.InitializeData();
         }
-        
+
         musicTitle.setText(songs.songTitle.get(songs.index));
         artistName.setText(songs.artistName.get(songs.index));
 
@@ -785,8 +950,8 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         Image scImg = ca.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         coverArt.setIcon(new javax.swing.ImageIcon(scImg));
     }
-    
-    public void changeSongListData(){
+
+    public void changeSongListData() {
         songNumberTitle1.setText(scroller.getValue() + "");
         songNumberTitle2.setText((scroller.getValue() + 1) + "");
         songNumberTitle3.setText((scroller.getValue() + 2) + "");
@@ -812,7 +977,25 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         songCoverArt3.setIcon(new javax.swing.ImageIcon(scPlay3));
         ImageIcon caPlay4 = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\coverarts\\" + songs.songTitle.get(scroller.getValue() + 2) + ".jpg");
         Image scPlay4 = caPlay4.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
-        songCoverArt4.setIcon(new javax.swing.ImageIcon(scPlay4));
+        songCoverArt4.setIcon(new javax.swing.ImageIcon(scPlay4)); 
+    }
+    
+    private void nowPlayingTexture(){
+        songPlay1.setIcon(new javax.swing.ImageIcon(scaledPlayButton));
+        songPlay2.setIcon(new javax.swing.ImageIcon(scaledPlayButton));
+        songPlay3.setIcon(new javax.swing.ImageIcon(scaledPlayButton));
+        songPlay4.setIcon(new javax.swing.ImageIcon(scaledPlayButton));
+        if (songs.initialSet) {
+            if (songs.index == scroller.getValue() - 1) {
+                songPlay1.setIcon(new javax.swing.ImageIcon(scalednowPlaying));
+            } else if (songs.index == scroller.getValue()) {
+                songPlay2.setIcon(new javax.swing.ImageIcon(scalednowPlaying));
+            } else if (songs.index == scroller.getValue() + 1) {
+                songPlay3.setIcon(new javax.swing.ImageIcon(scalednowPlaying));
+            } else if (songs.index == scroller.getValue() + 2) {
+                songPlay4.setIcon(new javax.swing.ImageIcon(scalednowPlaying));
+            }
+        }
     }
 
     public void playMethod() {
@@ -823,7 +1006,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             musicSlider.setEnabled(true);
         }
         songs.Play(songs.songTitle.get(songs.index), songs.artistName.get(songs.index));
-
+        volumeMethod();
         endingTime.setText(songs.displayEndTime);
         if (songs.getIsPlaying()) {
             actionLog.setText("Action Log: Played");
@@ -843,6 +1026,46 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             if (timer.isRunning()) {
                 timer.stop();
             }
+        }
+        nowPlayingTexture();
+    }
+
+    private void songListPlay() {
+        songs.setIsPlaying(false);
+        songs.hasStarted = false;
+        if (songs.clip != null) {
+            songs.clip.stop();
+            songs.clip = null;
+        }
+        i = 0;
+        changeData();
+        playMethod();
+        endingTime.setText(songs.displayEndTime);
+    }
+
+    private void volumeMethod() {
+        if (songs.clip != null) {
+            try {
+                FloatControl gainControl = (FloatControl) songs.clip.getControl(FloatControl.Type.MASTER_GAIN);
+                float volumeFloat = (-25.0f + (volume.getValue() / 100.0f) * (6.0205f - -25.0f));
+                if (volume.getValue() == 0) {
+                    volumeFloat = -80.f;
+                }
+                gainControl.setValue(volumeFloat);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            volume.setValue(81);
+        }
+        if (volume.getValue() >= 75) {
+            volumeButton.setIcon(new javax.swing.ImageIcon(scaledVolumeHigh));
+        } else if (volume.getValue() >= 50) {
+            volumeButton.setIcon(new javax.swing.ImageIcon(scaledVolumeMedium));
+        } else if (volume.getValue() >= 1) {
+            volumeButton.setIcon(new javax.swing.ImageIcon(scaledVolumeLow));
+        } else {
+            volumeButton.setIcon(new javax.swing.ImageIcon(scaledVolumeMute));
         }
     }
 
@@ -865,7 +1088,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                 }
                 startingTime.setText(minute + ":" + s);
                 timer.stop();
-                if(songs.clip != null){
+                if (songs.clip != null) {
                     songs.clip.close();
                 }
                 playButton.setIcon(new javax.swing.ImageIcon(scaledPlayButton));
@@ -874,8 +1097,8 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             }
         }
     }
-    
-    private void previousButton(){
+
+    private void previousButton() {
         if (songs.index > 0) {
             songs.index--;
         }
@@ -883,8 +1106,60 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         playButton.setIcon(new javax.swing.ImageIcon(scaledPauseButton));
         prevOrNext();
     }
-    
-    private void loopButton(){
+
+    private void shuffleButton() {
+        actionLog.setText("Action Log: Shuffled");
+        boolean isRepeated = false;
+        boolean randomNumRepeated = false;
+        int maxNum = 9;
+        int minNum = 0;
+        int limit = 0;
+        int randomNum = (int) (Math.random() * (maxNum - minNum + 1)) + minNum;
+        ArrayList<Integer> randomIndex = new ArrayList<Integer>();
+        if (randomIndex.isEmpty()) {
+            if (songs.clip == null) {
+                randomIndex.add(randomNum);
+            } else {
+                randomIndex.add(songs.index);
+                songs.index = 0;
+            }
+        }
+        while (randomIndex.size() != 10) {
+            if (!randomNumRepeated) {
+                randomNum = (int) (Math.random() * (maxNum - minNum + 1)) + minNum;
+                randomNumRepeated = true;
+            }
+            if (limit < randomIndex.size()) {
+                if (randomNum == randomIndex.get(limit)) {
+                    isRepeated = true;
+                    limit = 9;
+                } else {
+                    isRepeated = false;
+                }
+            }
+            if (!isRepeated && limit == 9) {
+                randomIndex.add(randomNum);
+                randomNumRepeated = false;
+            }
+            limit++;
+            if (limit == 10) {
+                limit = 0;
+                randomNumRepeated = false;
+            }
+        }
+        for (limit = 0; limit < randomIndex.size(); limit++) {
+            songs.songTitle.add(songs.songTitle.get(randomIndex.get(limit)));
+            songs.artistName.add(songs.artistName.get(randomIndex.get(limit)));
+        }
+        for (limit = 0; limit < randomIndex.size(); limit++) {
+            songs.songTitle.remove(0);
+            songs.artistName.remove(0);
+        }
+        changeSongListData();
+        nowPlayingTexture();
+    }
+
+    private void loopButton() {
         if (onLoop) {
             onLoop = false;
             loopButton.setText("Loop");
@@ -895,6 +1170,21 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             loopButton.setIcon(new javax.swing.ImageIcon(scaledLoopActiveButton));
         }
         actionLog.setText("Action Log: Loop");
+    }
+
+    private void mute() {
+        if (volume.getValue() != 0) {
+            tempVolume = volume.getValue();
+            volume.setValue(0);
+            actionLog.setText("Action Log: Muted");
+        } else {
+            if(tempVolume == 0){
+                tempVolume = 100;
+            }
+            volume.setValue(tempVolume);
+            actionLog.setText("Action Log: Unmuted");
+        }
+        volumeMethod();
     }
 
     /**
@@ -977,5 +1267,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel songPlayTitle3;
     private javax.swing.JLabel songPlayTitle4;
     private javax.swing.JLabel startingTime;
+    private javax.swing.JSlider volume;
+    private javax.swing.JLabel volumeButton;
     // End of variables declaration//GEN-END:variables
 }

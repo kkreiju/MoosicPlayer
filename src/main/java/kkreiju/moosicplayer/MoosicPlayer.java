@@ -8,11 +8,11 @@ package kkreiju.moosicplayer;
  * PROBLEMS: 
  *  delay sync in changing time 
  *  last song skip, freeze GUI, but audio is good
- * 
+ *  gif not working
  * 
  * GOALS:
- *  volume
- *  scroller mouse embed
+ *  lyrics
+ *  loop all playlist or loop once
  */
 public class MoosicPlayer {
 
