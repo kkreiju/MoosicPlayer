@@ -184,11 +184,6 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jPanel1KeyPressed(evt);
-            }
-        });
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setMaximumSize(new java.awt.Dimension(439, 61));
@@ -217,11 +212,6 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 musicSliderMouseReleased(evt);
-            }
-        });
-        musicSlider.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                musicSliderKeyPressed(evt);
             }
         });
 
@@ -918,18 +908,6 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         if (evt.getKeyCode() == KeyEvent.VK_RIGHT || evt.getKeyCode() == KeyEvent.VK_LEFT || volume.getValue() != tempVolume) {
             volume.setValue(tempVolume);
         }
-    }
-
-    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {
-
-    }
-
-    private void playButtonKeyPressed(java.awt.event.KeyEvent evt) {
-
-    }
-
-    private void musicSliderKeyPressed(java.awt.event.KeyEvent evt) {
-
     }
 
     public void prevOrNext() {
