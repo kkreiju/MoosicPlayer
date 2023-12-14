@@ -23,6 +23,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     //uninitialized music art
     ImageIcon noMusicArt = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\icon.png");
     Image scalednoMusicArt = noMusicArt.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+    Image logo = noMusicArt.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 
     //TEXTURES
     ImageIcon noplayButton = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\play.png");
@@ -56,6 +57,8 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     public GUI() {
         ImageIcon icon = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\icon.png");
         setIconImage(icon.getImage());
+        this.setUndecorated(true);
+        //this.setContentPane(new JLabel(new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\background.jpg")));
         initComponents();
         this.tempVolume = volume.getValue();
         musicSlider.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -171,6 +174,12 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         songArtistTitle2 = new javax.swing.JLabel();
         songArtistTitle3 = new javax.swing.JLabel();
         songArtistTitle4 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
+        lyricsPane = new javax.swing.JScrollPane();
+        lyricsDisplay = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1080, 560));
@@ -719,20 +728,83 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        jPanel7.setMaximumSize(new java.awt.Dimension(356, 426));
+        jPanel7.setMinimumSize(new java.awt.Dimension(356, 426));
+        jPanel7.setPreferredSize(new java.awt.Dimension(356, 426));
+        jPanel7.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jPanel7MouseWheelMoved(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Lyrics");
+
+        jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
+
+        lyricsPane.setBorder(null);
+        lyricsPane.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                lyricsPaneMouseWheelMoved(evt);
+            }
+        });
+
+        lyricsDisplay.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        lyricsDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lyricsDisplay.setText("");
+        lyricsPane.setViewportView(lyricsDisplay);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator5)
+                    .addComponent(lyricsPane)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lyricsPane, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
+        );
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(logo));
+        jLabel3.setText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(187, 187, 187)
+                        .addComponent(jLabel3))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -883,6 +955,26 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         tempVolume = volume.getValue();
     }//GEN-LAST:event_volumeMouseReleased
 
+    private void jPanel7MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jPanel7MouseWheelMoved
+        int turn = evt.getWheelRotation();
+        if(turn < 0){
+            lyricsPane.getVerticalScrollBar().setValue(lyricsPane.getVerticalScrollBar().getValue() - 15);
+        }
+        else{
+            lyricsPane.getVerticalScrollBar().setValue(lyricsPane.getVerticalScrollBar().getValue() + 15);
+        }
+    }//GEN-LAST:event_jPanel7MouseWheelMoved
+
+    private void lyricsPaneMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_lyricsPaneMouseWheelMoved
+        int turn = evt.getWheelRotation();
+        if(turn < 0){
+            lyricsPane.getVerticalScrollBar().setValue(lyricsPane.getVerticalScrollBar().getValue() - 15);
+        }
+        else{
+            lyricsPane.getVerticalScrollBar().setValue(lyricsPane.getVerticalScrollBar().getValue() + 15);
+        }
+    }//GEN-LAST:event_lyricsPaneMouseWheelMoved
+
     // I DELETED THE INITCOMPONENTS FUNCTIONS NOW WHAT HAVE I DONE HUHU ANYWAY AYAW HILABTI!
     private void formKeyPressed(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -944,6 +1036,62 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         ImageIcon ca = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\coverarts\\" + songs.getSongTitle + ".jpg");
         Image scImg = ca.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         coverArt.setIcon(new javax.swing.ImageIcon(scImg));
+        
+        //Lyrics
+        if(songs.getSongTitle == "Always"){
+            Lyrics l = new Lyrics();
+            l.Always();
+            lyricsDisplay.setText(l.lyrics);
+        }
+        else if(songs.getSongTitle == "Come Inside of My Heart"){
+            Lyrics l = new Lyrics();
+            l.ComeInsideOfMyHeart();
+            lyricsDisplay.setText(l.lyrics);
+        }
+        else if(songs.getSongTitle == "Disenchanted"){
+            Lyrics l = new Lyrics();
+            l.Disenchanted();
+            lyricsDisplay.setText(l.lyrics);
+        }
+        else if(songs.getSongTitle == "Enchanted"){
+            Lyrics l = new Lyrics();
+            l.Enchanted();
+            lyricsDisplay.setText(l.lyrics);
+        }
+        else if(songs.getSongTitle == "Fallen"){
+            Lyrics l = new Lyrics();
+            l.Fallen();
+            lyricsDisplay.setText(l.lyrics);
+        }
+        else if(songs.getSongTitle == "lowkey"){
+            Lyrics l = new Lyrics();
+            l.lowkey();
+            lyricsDisplay.setText(l.lyrics);
+        }
+        else if(songs.getSongTitle == "Maybe Maybe"){
+            Lyrics l = new Lyrics();
+            l.MaybeMaybe();
+            lyricsDisplay.setText(l.lyrics);
+        }
+        else if(songs.getSongTitle == "Runaway Baby"){
+            Lyrics l = new Lyrics();
+            l.RunawayBaby();
+            lyricsDisplay.setText(l.lyrics);
+        }
+        else if(songs.getSongTitle == "Sanctuary"){
+            Lyrics l = new Lyrics();
+            l.Sanctuary();
+            lyricsDisplay.setText(l.lyrics);
+        }
+         else if(songs.getSongTitle == "She Will Be Loved"){
+            Lyrics l = new Lyrics();
+            l.SheWillBeLoved();
+            lyricsDisplay.setText(l.lyrics);
+        }
+        else{
+            Lyrics l = new Lyrics();
+            lyricsDisplay.setText("Lyrics not Found");
+        }
     }
 
     public void changeSongListData() {
@@ -1227,17 +1375,23 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel coverArt;
     private javax.swing.JLabel endingTime;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel loopButton;
+    private javax.swing.JLabel lyricsDisplay;
+    private javax.swing.JScrollPane lyricsPane;
     public javax.swing.JSlider musicSlider;
     private javax.swing.JLabel musicTitle;
     private javax.swing.JLabel nextImageButton;
