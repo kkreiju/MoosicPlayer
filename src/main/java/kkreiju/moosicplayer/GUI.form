@@ -432,6 +432,7 @@
           </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="volumeStateChanged"/>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="volumeMouseReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="volumeButton">

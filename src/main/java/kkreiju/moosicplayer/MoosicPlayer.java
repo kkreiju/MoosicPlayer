@@ -7,8 +7,9 @@ package kkreiju.moosicplayer;
  *
  * PROBLEMS: 
  *  delay sync in changing time 
- *  last song skip, freeze GUI, but audio is good
  *  gif not working
+ * 
+ *  volume changes in previous next keybind
  * 
  * GOALS:
  *  lyrics

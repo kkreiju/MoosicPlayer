@@ -17,7 +17,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     int i = 0;
     int minute = 0;
     int second = 0;
-    int tempVolume = 0;
+    int tempVolume;
     boolean onLoop = false;
 
     //uninitialized music art
@@ -57,6 +57,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         ImageIcon icon = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\icon.png");
         setIconImage(icon.getImage());
         initComponents();
+        this.tempVolume = volume.getValue();
         musicSlider.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
@@ -64,6 +65,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         });
         volume.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
+                volumeStatic(evt);
                 formKeyPressed(evt);
             }
         });
@@ -380,6 +382,11 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         volume.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 volumeStateChanged(evt);
+            }
+        });
+        volume.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                volumeMouseReleased(evt);
             }
         });
 
@@ -882,6 +889,10 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         }
     }//GEN-LAST:event_jPanel3MouseWheelMoved
 
+    private void volumeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_volumeMouseReleased
+        tempVolume = volume.getValue();
+    }//GEN-LAST:event_volumeMouseReleased
+
     // I DELETED THE INITCOMPONENTS FUNCTIONS NOW WHAT HAVE I DONE HUHU ANYWAY AYAW HILABTI!
     private void formKeyPressed(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -900,6 +911,12 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             shuffleButton();
         } else if (evt.getKeyCode() == KeyEvent.VK_M) {
             mute();
+        }
+    }
+    
+    private void volumeStatic(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_RIGHT || evt.getKeyCode() == KeyEvent.VK_LEFT || volume.getValue() != tempVolume) {
+            volume.setValue(tempVolume);
         }
     }
 
@@ -1004,6 +1021,11 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             musicSlider.setValue(0);
             timer.start();
             musicSlider.setEnabled(true);
+            songs.clip = null;
+            songs.setIsPlaying(false);
+            i = 0;
+            minute = 0;
+            second = 0;
         }
         songs.Play(songs.songTitle.get(songs.index), songs.artistName.get(songs.index));
         volumeMethod();
@@ -1019,7 +1041,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             if (!timer.isRunning()) {
                 timer.start();
             }
-        } else {
+        } else if(!songs.getIsPlaying()){
             actionLog.setText("Action Log: Paused");
             songs.changeTime = songs.clip.getMicrosecondPosition();
             playButton.setIcon(new javax.swing.ImageIcon(scaledPlayButton));
@@ -1047,7 +1069,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         if (songs.clip != null) {
             try {
                 FloatControl gainControl = (FloatControl) songs.clip.getControl(FloatControl.Type.MASTER_GAIN);
-                float volumeFloat = (-25.0f + (volume.getValue() / 100.0f) * (6.0205f - -25.0f));
+                float volumeFloat = (-25.0f + (volume.getValue() / 100.0f) * (6.0205f - (-25.0f)));
                 if (volume.getValue() == 0) {
                     volumeFloat = -80.f;
                 }
@@ -1055,7 +1077,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
+        } else if(!songs.initialSet){
             volume.setValue(81);
         }
         if (volume.getValue() >= 75) {
@@ -1174,7 +1196,6 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
     private void mute() {
         if (volume.getValue() != 0) {
-            tempVolume = volume.getValue();
             volume.setValue(0);
             actionLog.setText("Action Log: Muted");
         } else {
