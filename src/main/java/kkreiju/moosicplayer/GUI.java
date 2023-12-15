@@ -19,6 +19,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     int second = 0;
     int tempVolume;
     boolean onLoop = false;
+    boolean muted = false;
 
     //uninitialized music art
     ImageIcon noMusicArt = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\icon.png");
@@ -180,6 +181,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         lyricsPane = new javax.swing.JScrollPane();
         lyricsDisplay = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1080, 560));
@@ -191,14 +193,16 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         });
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanel1.setForeground(new java.awt.Color(153, 153, 153));
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setMaximumSize(new java.awt.Dimension(439, 61));
         jPanel2.setMinimumSize(new java.awt.Dimension(439, 61));
 
+        startingTime.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
         startingTime.setForeground(new java.awt.Color(255, 255, 255));
+        startingTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         startingTime.setText("--:--");
 
         musicSlider.setBackground(new java.awt.Color(102, 102, 102));
@@ -224,7 +228,9 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             }
         });
 
+        endingTime.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
         endingTime.setForeground(new java.awt.Color(255, 255, 255));
+        endingTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         endingTime.setText("--:--");
 
         playButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -291,10 +297,10 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(musicSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(startingTime)
-                                .addGap(190, 190, 190)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(endingTime))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(shuffleButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,11 +340,11 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
         jPanel4.setBackground(new java.awt.Color(102, 102, 102));
 
-        musicTitle.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        musicTitle.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
         musicTitle.setForeground(new java.awt.Color(255, 255, 255));
         musicTitle.setText("Music Title");
 
-        artistName.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        artistName.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
         artistName.setForeground(new java.awt.Color(255, 255, 255));
         artistName.setText("Artist Name");
 
@@ -784,6 +790,10 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         jLabel3.setIcon(new javax.swing.ImageIcon(logo));
         jLabel3.setText("");
 
+        jLabel4.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("<html><center><Final Project<br>\nMoosicPlayer<br>\nArjay Nino G. Saguisa<br>\n92485/92477<br>\nIT-DIGILOG21<br><br>\n<hr>\n<br>\n<b>SPACE</b> - Play<br>\n<b>LEFT</b> - Previous<br>\n<b>RIGHT</b> - Next<br>\n<b>L</b> - Loop<br>\n<b>S</b> - Shuffle<br>\n<b>M</b> - Mute<br>\n<b>ESC</b> - Exit<br>\n</center></html>");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -791,7 +801,9 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -800,11 +812,13 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(187, 187, 187)
-                        .addComponent(jLabel3))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1092,6 +1106,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             Lyrics l = new Lyrics();
             lyricsDisplay.setText("Lyrics not Found");
         }
+        lyricsPane.getVerticalScrollBar().setValue(0);
     }
 
     public void changeSongListData() {
@@ -1321,15 +1336,17 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     }
 
     private void mute() {
-        if (volume.getValue() != 0) {
+        if (!muted) {
             volume.setValue(0);
             actionLog.setText("Action Log: Muted");
+            muted = true;
         } else {
             if(tempVolume == 0){
                 tempVolume = 100;
             }
             volume.setValue(tempVolume);
             actionLog.setText("Action Log: Unmuted");
+            muted = false;
         }
         volumeMethod();
     }
@@ -1377,6 +1394,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
