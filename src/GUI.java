@@ -90,7 +90,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         second = ((int) microsecondValue / 1_000_000) % 60;
 
         if (i < songs.calculateTime) {
-            musicSlider.setValue(i);
+            musicSlider.setValue(i + 1);
         } else {
             timer.stop();
             playButton.setIcon(new javax.swing.ImageIcon(scaledPlayButton));
@@ -1308,11 +1308,19 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         int randomNum = (int) (Math.random() * (maxNum - minNum + 1)) + minNum;
         ArrayList<Integer> randomIndex = new ArrayList<Integer>();
         if (randomIndex.isEmpty()) {
-            if (songs.clip == null) {
-                randomIndex.add(randomNum);
+        	if(songs.clip == null && songs.initialSet) {
+            	randomIndex.add(songs.index);
+                songs.index = 0;
+                nowPlayingTexture();
+            }
+        	if (songs.clip == null) {
+        		if(randomNum != songs.index) {
+        			randomIndex.add(randomNum);
+        		}
             } else {
                 randomIndex.add(songs.index);
                 songs.index = 0;
+                nowPlayingTexture();
             }
         }
         while (randomIndex.size() != 10) {
