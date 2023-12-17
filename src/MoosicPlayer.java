@@ -1,5 +1,3 @@
-package kkreiju.moosicplayer;
-
 /**
  * MoosicPlayer (OOP Project)
  *

@@ -1,5 +1,3 @@
-package kkreiju.moosicplayer;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -24,37 +22,37 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     boolean labelChange = false;
 
     //uninitialized music art
-    ImageIcon noMusicArt = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\icon.png");
+    ImageIcon noMusicArt = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
     Image scalednoMusicArt = noMusicArt.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
     Image logo = noMusicArt.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 
     //TEXTURES
-    ImageIcon noplayButton = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\play.png");
+    ImageIcon noplayButton = new ImageIcon(getClass().getClassLoader().getResource("play.png"));
     Image scaledPlayButton = noplayButton.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-    ImageIcon nopauseButton = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\pause.png");
+    ImageIcon nopauseButton = new ImageIcon(getClass().getClassLoader().getResource("pause.png"));
     Image scaledPauseButton = nopauseButton.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-    ImageIcon noloopinactiveButton = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\notOnLoop.png");
+    ImageIcon noloopinactiveButton = new ImageIcon(getClass().getClassLoader().getResource("notOnLoop.png"));
     Image scaledLoopInactiveButton = noloopinactiveButton.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-    ImageIcon noloopactiveButton = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\onLoop.png");
+    ImageIcon noloopactiveButton = new ImageIcon(getClass().getClassLoader().getResource("onLoop.png"));
     Image scaledLoopActiveButton = noloopactiveButton.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-    ImageIcon nopreviousButton = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\previous.png");
+    ImageIcon nopreviousButton = new ImageIcon(getClass().getClassLoader().getResource("previous.png"));
     Image scaledPreviousButton = nopreviousButton.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-    ImageIcon nonextButton = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\next.png");
+    ImageIcon nonextButton = new ImageIcon(getClass().getClassLoader().getResource("next.png"));
     Image scaledNextButton = nonextButton.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-    ImageIcon noshuffleButton = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\shuffle.png");
+    ImageIcon noshuffleButton = new ImageIcon(getClass().getClassLoader().getResource("shuffle.png"));
     Image scaledShuffleButton = noshuffleButton.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-    ImageIcon novolumeHigh = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\volumeHigh.png");
+    ImageIcon novolumeHigh = new ImageIcon(getClass().getClassLoader().getResource("volumeHigh.png"));
     Image scaledVolumeHigh = novolumeHigh.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-    ImageIcon novolumeMedium = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\volumeMedium.png");
+    ImageIcon novolumeMedium = new ImageIcon(getClass().getClassLoader().getResource("volumeMedium.png"));
     Image scaledVolumeMedium = novolumeMedium.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-    ImageIcon novolumeLow = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\volumeLow.png");
+    ImageIcon novolumeLow = new ImageIcon(getClass().getClassLoader().getResource("volumeLow.png"));
     Image scaledVolumeLow = novolumeLow.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-    ImageIcon novolumeMute = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\volumeMute.png");
+    ImageIcon novolumeMute = new ImageIcon(getClass().getClassLoader().getResource("volumeMute.png"));
     Image scaledVolumeMute = novolumeMute.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
     
-    ImageIcon noPlaying1 = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\nowPlaying1.png");
+    ImageIcon noPlaying1 = new ImageIcon(getClass().getClassLoader().getResource("nowPlaying1.png"));
     Image scalednowPlaying1 = noPlaying1.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-    ImageIcon noPlaying2 = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\nowPlaying2.png");
+    ImageIcon noPlaying2 = new ImageIcon(getClass().getClassLoader().getResource("nowPlaying2.png"));
     Image scalednowPlaying2 = noPlaying2.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
     Timer nowPlayingTimer;
 
@@ -62,10 +60,10 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
      * Creates new form GUI
      */
     public GUI() {
-        ImageIcon icon = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\icon.png");
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
         this.setUndecorated(true);
-        this.setContentPane(new JLabel(new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\background.jpg")));
+        this.setContentPane(new JLabel(new ImageIcon(getClass().getClassLoader().getResource("background.jpg"))));
         initComponents();
         this.tempVolume = volume.getValue();
         musicSlider.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1057,7 +1055,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         artistName.setText(songs.artistName.get(songs.index));
 
         //COVER ART
-        ImageIcon ca = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\coverarts\\" + songs.getSongTitle + ".jpg");
+        ImageIcon ca = new ImageIcon(getClass().getClassLoader().getResource("coverarts\\" + songs.getSongTitle + ".jpg"));
         Image scImg = ca.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         coverArt.setIcon(new javax.swing.ImageIcon(scImg));
 
@@ -1123,16 +1121,16 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         songArtistTitle4.setText(songs.artistName.get(scroller.getValue() + 2));
 
         //COVER ART
-        ImageIcon caPlay1 = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\coverarts\\" + songs.songTitle.get(scroller.getValue() - 1) + ".jpg");
+        ImageIcon caPlay1 = new ImageIcon(getClass().getClassLoader().getResource("coverarts\\" + songs.songTitle.get(scroller.getValue() - 1) + ".jpg"));
         Image scPlay1 = caPlay1.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         songCoverArt1.setIcon(new javax.swing.ImageIcon(scPlay1));
-        ImageIcon caPlay2 = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\coverarts\\" + songs.songTitle.get(scroller.getValue()) + ".jpg");
+        ImageIcon caPlay2 = new ImageIcon(getClass().getClassLoader().getResource("coverarts\\" + songs.songTitle.get(scroller.getValue()) + ".jpg"));
         Image scPlay2 = caPlay2.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         songCoverArt2.setIcon(new javax.swing.ImageIcon(scPlay2));
-        ImageIcon caPlay3 = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\coverarts\\" + songs.songTitle.get(scroller.getValue() + 1) + ".jpg");
+        ImageIcon caPlay3 = new ImageIcon(getClass().getClassLoader().getResource("coverarts\\" + songs.songTitle.get(scroller.getValue() + 1) + ".jpg"));
         Image scPlay3 = caPlay3.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         songCoverArt3.setIcon(new javax.swing.ImageIcon(scPlay3));
-        ImageIcon caPlay4 = new ImageIcon("src\\main\\java\\kkreiju\\moosicplayer\\textures\\coverarts\\" + songs.songTitle.get(scroller.getValue() + 2) + ".jpg");
+        ImageIcon caPlay4 = new ImageIcon(getClass().getClassLoader().getResource("coverarts\\" + songs.songTitle.get(scroller.getValue() + 2) + ".jpg"));
         Image scPlay4 = caPlay4.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         songCoverArt4.setIcon(new javax.swing.ImageIcon(scPlay4));
     }

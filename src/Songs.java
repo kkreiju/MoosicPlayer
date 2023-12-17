@@ -1,6 +1,6 @@
-package kkreiju.moosicplayer;
-
 import java.io.*;
+import java.net.URL;
+
 import javax.sound.sampled.*;
 import java.util.*;
 
@@ -67,8 +67,8 @@ public class Songs{
     public void Play(String getSongTitle, String getArtistname) {
         initialSet = true;
         try {
-            File musicfile = new File("src\\main\\java\\kkreiju\\moosicplayer\\songs\\" + getSongTitle + ".wav");
-            AudioInputStream audiostream = AudioSystem.getAudioInputStream(musicfile);
+            URL musicfileURL = getClass().getResource(getSongTitle + ".wav");
+            AudioInputStream audiostream = AudioSystem.getAudioInputStream(musicfileURL);
             
             if (!hasStarted && clip == null) {
                 hasStarted = true;
@@ -78,7 +78,7 @@ public class Songs{
                 clip.setMicrosecondPosition(changeTime);
                 
                 //get minutes of the song
-                AudioFileFormat format = AudioSystem.getAudioFileFormat(musicfile);
+                AudioFileFormat format = AudioSystem.getAudioFileFormat(musicfileURL);
                 long durationMicroseconds = (long) (format.getFrameLength() * 1_000_000.0 / format.getFormat().getFrameRate());
                 long durationMinutes = durationMicroseconds / 60_000_000;
                 long remainingSeconds = (durationMicroseconds % 60_000_000) / 1_000_000;
