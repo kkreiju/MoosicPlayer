@@ -7,8 +7,6 @@ package kkreiju.moosicplayer;
  *
  * PROBLEMS: 
  *  delay sync in changing time 
- *  gif not working
- * 
  *  volume changes in previous next keybind
  * 
  * GOALS:
@@ -22,7 +20,6 @@ public class MoosicPlayer {
 
         System.out.println("Final Project\nMoosicPlayer\nArjay Nino G. Saguisa\n92485/92477\nIT-DIGILOG21");
         try {
-            Thread.sleep(2000);
             g = new GUI();
             g.setLocationRelativeTo(null);
             g.setTitle("MoosicPlayer");
