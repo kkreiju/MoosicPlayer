@@ -1055,7 +1055,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         artistName.setText(songs.artistName.get(songs.index));
 
         //COVER ART
-        ImageIcon ca = new ImageIcon(getClass().getClassLoader().getResource("coverarts\\" + songs.getSongTitle + ".jpg"));
+        ImageIcon ca = new ImageIcon(getClass().getClassLoader().getResource("coverarts/" + songs.getSongTitle + ".jpg"));
         Image scImg = ca.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         coverArt.setIcon(new javax.swing.ImageIcon(scImg));
 
@@ -1121,16 +1121,16 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         songArtistTitle4.setText(songs.artistName.get(scroller.getValue() + 2));
 
         //COVER ART
-        ImageIcon caPlay1 = new ImageIcon(getClass().getClassLoader().getResource("coverarts\\" + songs.songTitle.get(scroller.getValue() - 1) + ".jpg"));
+        ImageIcon caPlay1 = new ImageIcon(getClass().getClassLoader().getResource("coverarts/" + songs.songTitle.get(scroller.getValue() - 1) + ".jpg"));
         Image scPlay1 = caPlay1.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         songCoverArt1.setIcon(new javax.swing.ImageIcon(scPlay1));
-        ImageIcon caPlay2 = new ImageIcon(getClass().getClassLoader().getResource("coverarts\\" + songs.songTitle.get(scroller.getValue()) + ".jpg"));
+        ImageIcon caPlay2 = new ImageIcon(getClass().getClassLoader().getResource("coverarts/" + songs.songTitle.get(scroller.getValue()) + ".jpg"));
         Image scPlay2 = caPlay2.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         songCoverArt2.setIcon(new javax.swing.ImageIcon(scPlay2));
-        ImageIcon caPlay3 = new ImageIcon(getClass().getClassLoader().getResource("coverarts\\" + songs.songTitle.get(scroller.getValue() + 1) + ".jpg"));
+        ImageIcon caPlay3 = new ImageIcon(getClass().getClassLoader().getResource("coverarts/" + songs.songTitle.get(scroller.getValue() + 1) + ".jpg"));
         Image scPlay3 = caPlay3.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         songCoverArt3.setIcon(new javax.swing.ImageIcon(scPlay3));
-        ImageIcon caPlay4 = new ImageIcon(getClass().getClassLoader().getResource("coverarts\\" + songs.songTitle.get(scroller.getValue() + 2) + ".jpg"));
+        ImageIcon caPlay4 = new ImageIcon(getClass().getClassLoader().getResource("coverarts/" + songs.songTitle.get(scroller.getValue() + 2) + ".jpg"));
         Image scPlay4 = caPlay4.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         songCoverArt4.setIcon(new javax.swing.ImageIcon(scPlay4));
     }
@@ -1379,7 +1379,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         private class nowPlayingTimerListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
-            if(nowPlayingLabel == 1){
+            if(nowPlayingLabel == 1 && songs.clip.isRunning()){
                 if(labelChange){
                     songPlay1.setIcon(new javax.swing.ImageIcon(scalednowPlaying1));
                     labelChange = false;
@@ -1389,7 +1389,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                     labelChange = true;
                 }
             }
-            else if(nowPlayingLabel == 2){
+            else if(nowPlayingLabel == 2 && songs.clip.isRunning()){
                 if(labelChange){
                     songPlay2.setIcon(new javax.swing.ImageIcon(scalednowPlaying1));
                     labelChange = false;
@@ -1399,7 +1399,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                     labelChange = true;
                 }
             }
-            else if(nowPlayingLabel == 3){
+            else if(nowPlayingLabel == 3 && songs.clip.isRunning()){
                 if(labelChange){
                     songPlay3.setIcon(new javax.swing.ImageIcon(scalednowPlaying1));
                     labelChange = false;
@@ -1409,7 +1409,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                     labelChange = true;
                 }
             }
-            else if(nowPlayingLabel == 4){
+            else if(nowPlayingLabel == 4 && songs.clip.isRunning()){
                 if(labelChange){
                     songPlay4.setIcon(new javax.swing.ImageIcon(scalednowPlaying1));
                     labelChange = false;
